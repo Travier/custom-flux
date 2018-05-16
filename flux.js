@@ -1,7 +1,6 @@
 /*
 Custom implementation of the Flux Pattern
 
-** REQUIRES JQUERY **
 ** https://facebook.github.io/flux/docs/in-depth-overview.html#content **
 */
 var Flux = {
@@ -127,8 +126,10 @@ _each = function (array, cb) {
   }
 }
 
+//DOES NOT DEEP CLONE
 _assign = function(oldState, map) {
-  var newState = jQuery.extend(true, {}, oldState);
+  var newState = _extend({}, oldState)
+  //var newState = jQuery.extend(true, {}, oldState);
 
   for(var key in map) {
     newState[key] = map[key];
@@ -151,3 +152,12 @@ _reduce = function(array, reducer) {
 
   return results;
 }
+
+_extend = function(){
+  for(var i=1; i<arguments.length; i++)
+      for(var key in arguments[i])
+          if(arguments[i].hasOwnProperty(key))
+              arguments[0][key] = arguments[i][key];
+  return arguments[0];
+}
+
